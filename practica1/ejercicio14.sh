@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$#" -ne 1 ]; then
-    echo "Uso: $0 <directorio>"
+    echo "Uso: scipt directorio"
     exit 1
 fi
 
@@ -10,15 +10,17 @@ if [ ! -d "$directorio" ]; then
     echo "Error: El directorio '$directorio' no existe."
     exit 1
 fi
-
+contador=0
 echo "Listado de entradas en el directorio '$directorio':"
 for entrada in "$directorio"/*; do
+    nombre=$(basename "$entrada")
     if [ -f "$entrada" ]; then
-        echo "$entrada es un fichero."
+        echo "$nombre es un fichero."
+        ((contador++))
     elif [ -d "$entrada" ]; then
-        echo "$entrada es un directorio."
+        echo "$nombre es un directorio."
+        ((contador++))
     fi
 done
 
-numero_entradas=$(find "$directorio" -maxdepth 1 -type f -o -type d | wc -l)
-echo "numero total de entradas : $numero_entradas"
+echo "numero total de entradas : $contador"
